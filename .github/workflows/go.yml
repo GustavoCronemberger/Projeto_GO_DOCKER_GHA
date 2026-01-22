@@ -40,15 +40,17 @@ jobs:
   
   build:
     needs: test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        go_version: ['1.18', '1.17', '>=1.18']
-        os: ['ubuntu-latest']
+    runs-on: ubuntu-latest'
     steps:
     - uses: actions/checkout@v3
     - name: Build
       run: go build -v main.go
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v6.0.0
+      with:
+        name: API_GO
+        path: main
 
   docker:
     needs: build
